@@ -1,0 +1,580 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+@{
+    ViewData["Title"] = "BAC Campus Navigation";
+}
+
+<style>
+    :root {
+        --bac-navy: #2c367f;
+        --bac-background: #f5f6f9;
+        --bac-text: #36404d;
+        --bac-muted: #778394;
+        --bac-border: #b9c2ce;
+    }
+
+    /* Prevent padding and borders from causing overflow */
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    html {
+        width: 100%;
+        min-width: 320px;
+        overflow-x: clip;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+        margin: 0;
+        width: 100%;
+        background: var(--bac-background);
+        color: var(--bac-text);
+        overflow-x: clip;
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+    a,
+    button,
+    input {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .bac-home {
+        min-height: 100vh;
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* HEADER */
+    .bac-header {
+        min-height: 78px;
+        background: var(--bac-navy);
+        border: 2px solid #c5ccda;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 32px;
+        gap: 24px;
+    }
+
+    .bac-brand {
+        color: white;
+        font-size: 18px;
+        font-weight: 700;
+        text-decoration: none;
+        line-height: 1.4;
+        white-space: nowrap;
+    }
+
+    .bac-nav {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 18px;
+        flex-wrap: wrap;
+    }
+
+    .bac-nav a {
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.5;
+        white-space: nowrap;
+    }
+
+    .bac-nav a:hover,
+    .bac-nav a:focus-visible {
+        text-decoration: underline;
+    }
+
+    /* MAIN CONTENT */
+    .bac-content {
+        flex: 1;
+        width: 100%;
+        padding: clamp(40px, 6vw, 88px) 6.8% 56px;
+    }
+
+    .bac-intro {
+        width: 100%;
+        max-width: 1100px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .bac-intro h1 {
+        font-size: clamp(28px, 3.2vw, 40px);
+        line-height: 1.2;
+        font-weight: 700;
+        margin: 0 0 14px;
+        overflow-wrap: anywhere;
+    }
+
+    .bac-subtitle {
+        color: var(--bac-muted);
+        font-size: clamp(15px, 1.5vw, 18px);
+        line-height: 1.5;
+        margin: 0 0 22px;
+    }
+
+    /* SEARCH */
+    .bac-search {
+        display: flex;
+        align-items: stretch;
+        gap: 15px;
+        width: 100%;
+    }
+
+    .bac-search input {
+        flex: 1;
+        width: 100%;
+        min-width: 0;
+        min-height: 64px;
+        border: 2px solid var(--bac-border);
+        border-radius: 13px;
+        background: white;
+        padding: 14px;
+        font: inherit;
+        font-size: 16px;
+        color: var(--bac-text);
+    }
+
+    .bac-search input:focus {
+        outline: 3px solid #929bd4;
+        outline-offset: 2px;
+    }
+
+    .bac-search button {
+        flex: 0 0 143px;
+        min-height: 64px;
+        padding: 12px 18px;
+        border: none;
+        border-radius: 24px;
+        background: var(--bac-navy);
+        color: white;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        touch-action: manipulation;
+    }
+
+    .bac-search button:hover {
+        background: #222b6a;
+    }
+
+    .bac-search button:focus-visible,
+    .bac-campus-card:focus-visible,
+    .bac-nav a:focus-visible {
+        outline: 3px solid #929bd4;
+        outline-offset: 3px;
+    }
+
+    .bac-account-note {
+        color: var(--bac-muted);
+        font-size: clamp(14px, 1.4vw, 17px);
+        line-height: 1.6;
+        margin: 22px 0 0;
+    }
+
+    .bac-search-message {
+        margin: 12px 0 0;
+        color: #a12b2b;
+        text-align: left;
+        font-size: 14px;
+    }
+
+    /* CAMPUS CARDS */
+    .bac-campus-section {
+        width: 100%;
+        max-width: 1440px;
+        margin: clamp(36px, 4vw, 54px) auto 0;
+    }
+
+    .bac-campus-section h2 {
+        font-size: 20px;
+        line-height: 1.4;
+        font-weight: 700;
+        margin: 0 0 34px;
+    }
+
+    .bac-campus-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 6%;
+    }
+
+    .bac-campus-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 6%;
+        min-width: 0;
+        min-height: 220px;
+        padding: 14px 4%;
+        border: 1px solid var(--bac-navy);
+        border-radius: 24px;
+        background: #e9edf2;
+        color: #111;
+        text-decoration: none;
+        transition: background-color 0.2s ease;
+    }
+
+    .bac-campus-card:hover {
+        background: #e0e5ee;
+    }
+
+    .bac-campus-card img {
+        display: block;
+        flex: 0 1 54%;
+        width: 54%;
+        min-width: 0;
+        height: 190px;
+        object-fit: cover;
+        background: #dfe4eb;
+    }
+
+    .bac-campus-name {
+        flex: 1;
+        min-width: 0;
+        text-align: center;
+        font-size: clamp(16px, 1.7vw, 25px);
+        line-height: 1.4;
+        font-weight: 400;
+        overflow-wrap: anywhere;
+    }
+
+    /* FOOTER */
+    .bac-footer {
+        min-height: 76px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 18px 16px;
+        background: var(--bac-navy);
+        border: 2px solid #c5ccda;
+        color: white;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    .bac-footer a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .bac-footer a:hover {
+        text-decoration: underline;
+    }
+
+    /* TABLETS AND SMALL LAPTOPS */
+    @@media (max-width: 900px) {
+        .bac-header {
+            padding: 18px 22px;
+            gap: 18px;
+        }
+
+        .bac-brand {
+            font-size: 16px;
+        }
+
+        .bac-nav {
+            gap: 12px;
+        }
+
+        .bac-nav a {
+            font-size: 14px;
+        }
+
+        .bac-content {
+            padding-left: 5%;
+            padding-right: 5%;
+        }
+
+        .bac-campus-grid {
+            gap: 24px;
+        }
+
+        .bac-campus-card {
+            min-height: 190px;
+            padding: 12px;
+            gap: 12px;
+        }
+
+        .bac-campus-card img {
+            height: 155px;
+        }
+    }
+
+    /* MOBILE PHONES */
+    @@media (max-width: 600px) {
+        .bac-header {
+            min-height: auto;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 14px;
+            padding: 18px 16px;
+        }
+
+        .bac-brand {
+            white-space: normal;
+            text-align: center;
+            font-size: 17px;
+        }
+
+        .bac-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px 16px;
+            width: 100%;
+        }
+
+        .bac-nav a {
+            font-size: 14px;
+            padding: 5px 0;
+        }
+
+        .bac-content {
+            padding: 38px 18px 40px;
+        }
+
+        .bac-intro h1 {
+            font-size: clamp(27px, 7vw, 34px);
+            line-height: 1.2;
+            margin-bottom: 12px;
+        }
+
+        .bac-subtitle {
+            font-size: 15px;
+            margin-bottom: 22px;
+        }
+
+        .bac-search {
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .bac-search input {
+            flex: none;
+            width: 100%;
+            min-height: 56px;
+            padding: 13px;
+            font-size: 16px;
+        }
+
+        .bac-search button {
+            flex: none;
+            width: 100%;
+            min-height: 54px;
+            border-radius: 14px;
+            font-size: 16px;
+        }
+
+        .bac-account-note {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-top: 18px;
+        }
+
+        .bac-campus-section {
+            margin-top: 36px;
+        }
+
+        .bac-campus-section h2 {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .bac-campus-grid {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 16px;
+        }
+
+        .bac-campus-card {
+            min-height: 140px;
+            padding: 12px;
+            gap: 14px;
+            border-radius: 18px;
+        }
+
+        .bac-campus-card img {
+            flex: 0 1 52%;
+            width: 52%;
+            height: 125px;
+        }
+
+        .bac-campus-name {
+            font-size: clamp(15px, 4vw, 19px);
+        }
+
+        .bac-footer {
+            min-height: 68px;
+            padding: 16px 12px;
+            font-size: 12px;
+        }
+    }
+
+    /* EXTRA SMALL PHONES */
+    @@media (max-width: 360px) {
+        .bac-header {
+            padding: 16px 12px;
+        }
+
+        .bac-nav {
+            gap: 6px 12px;
+        }
+
+        .bac-nav a {
+            font-size: 13px;
+        }
+
+        .bac-content {
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+
+        .bac-campus-card {
+            gap: 9px;
+            padding: 9px;
+        }
+
+        .bac-campus-card img {
+            height: 105px;
+        }
+
+        .bac-campus-name {
+            font-size: 14px;
+        }
+    }
+
+    /* Respect reduced-motion preferences */
+    @@media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+            scroll-behavior: auto !important;
+            transition: none !important;
+        }
+    }
+</style>
+
+<div class="bac-home">
+    <header class="bac-header">
+        <a class="bac-brand" asp-controller="Home" asp-action="Index">
+            BAC CAMPUS NAVIGATION
+        </a>
+
+        <nav class="bac-nav" aria-label="Main navigation">
+            <a asp-controller="Home" asp-action="Index">Home</a>
+            <a asp-controller="Facilities" asp-action="Index">Facilities</a>
+            <a asp-controller="Map" asp-action="Index">Map</a>
+            <a asp-controller="Home" asp-action="Privacy">About</a>
+            <a asp-controller="Account" asp-action="Login">Login</a>
+            <a asp-controller="Account" asp-action="Register">Create Account</a>
+        </nav>
+    </header>
+
+    <main class="bac-content">
+        <section class="bac-intro">
+            <h1>Find your way around BAC</h1>
+
+            <p class="bac-subtitle">
+                Search for a lecture room, computer lab, or office
+            </p>
+
+            <form class="bac-search" id="campusSearchForm">
+                <input id="facilitySearch"
+                       type="search"
+                       placeholder="Search by room, building or facility name..."
+                       aria-label="Search for a campus facility" />
+
+                <button type="submit">SEARCH</button>
+            </form>
+
+            <p id="searchMessage"
+               class="bac-search-message"
+               role="status"
+               aria-live="polite"
+               hidden></p>
+
+            <p class="bac-account-note">
+                You can search for a location without an account.
+                Create account to save locations and give feedback
+            </p>
+        </section>
+
+        <section class="bac-campus-section">
+            <h2>SELECT YOUR CAMPUS</h2>
+
+            <div class="bac-campus-grid">
+                <a class="bac-campus-card"
+                   asp-controller="Facilities"
+                   asp-action="Index"
+                   asp-route-campus="Main Campus">
+                    <img src="https://placehold.co/600x350/e0e5ec/36404d?text=Main+Campus"
+                         alt="Main Campus building"
+                         loading="lazy" />
+
+                    <span class="bac-campus-name">MAIN CAMPUS</span>
+                </a>
+
+                <a class="bac-campus-card"
+                   asp-controller="Facilities"
+                   asp-action="Index"
+                   asp-route-campus="New Campus">
+                    <img src="https://placehold.co/600x350/e0e5ec/36404d?text=New+Campus"
+                         alt="New Campus building"
+                         loading="lazy" />
+
+                    <span class="bac-campus-name">NEW CAMPUS</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bac-footer">
+        <span>
+            BAC Campus Navigation&nbsp; • &nbsp;
+            <a asp-controller="Home" asp-action="Privacy">Help / Contact</a>
+        </span>
+    </footer>
+</div>
+
+<script>
+    document
+        .getElementById("campusSearchForm")
+        .addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const query = document
+                .getElementById("facilitySearch")
+                .value
+                .trim();
+
+            const message = document.getElementById("searchMessage");
+
+            if (!query) {
+                message.textContent =
+                    "Please enter a room, building or facility name.";
+                message.hidden = false;
+                document.getElementById("facilitySearch").focus();
+                return;
+            }
+
+            message.textContent =
+                "The facility search will be connected in the next step.";
+            message.hidden = false;
+        });
+</script>
+
